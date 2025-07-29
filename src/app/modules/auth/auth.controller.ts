@@ -4,6 +4,8 @@ import { AuthService } from "./auth.service";
 import { sendResponse } from "../../utils/sendResponse";
 import httpStatus from "http-status-codes";
 import { JwtPayload } from "jsonwebtoken";
+
+
 const createUser = catchAsync(async (req: Request, res: Response) => {
   const result = await AuthService.createUser(req.body);
   sendResponse(res, {
@@ -56,10 +58,12 @@ const logout = catchAsync(async (req: Request, res: Response) => {
   res.clearCookie("accessToken", {
     httpOnly: true,
     secure: false,
+    sameSite: "lax"
   });
   res.clearCookie("refreshToken", {
     httpOnly: true,
     secure: false,
+    sameSite: "lax"
   });
   sendResponse(res, {
     statusCode: httpStatus.OK,
@@ -68,6 +72,7 @@ const logout = catchAsync(async (req: Request, res: Response) => {
     data: null,
   });
 });
+
 
 export const AuthController = {
   createUser,

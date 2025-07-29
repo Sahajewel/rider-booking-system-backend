@@ -1,14 +1,13 @@
 import { envVars } from "../../config/env";
 import AppError from "../../errorHelpers/appErrors";
-import { Role } from "../user/user.interface";
+import { IUser, Role } from "../user/user.interface";
 import { User } from "../user/user.model";
-import { LoginPayload, RegisterPayload } from "./auth.interface";
 import bcryptjs from "bcrypt";
 import httpStatus from "http-status-codes";
 import { createTokens } from "../user/user.token";
 import { JwtPayload } from "jsonwebtoken";
 
-const createUser = async (payload: RegisterPayload) => {
+const createUser = async (payload: Partial<IUser>) => {
   let { email, password, name, role = Role.RIDER } = payload;
   const isExist = await User.findOne({ email });
   if (isExist) {
@@ -26,7 +25,7 @@ const createUser = async (payload: RegisterPayload) => {
   });
   return createUser;
 };
-const credentialLogin = async (payload: LoginPayload) => {
+const credentialLogin = async (payload: Partial<IUser>) => {
   const { email, password } = payload;
   // Step 1: Check if user exists
   const isUserExist = await User.findOne({ email });
@@ -35,8 +34,8 @@ const credentialLogin = async (payload: LoginPayload) => {
   }
   // Step 2: Check password
   const isPasswordMatched = await bcryptjs.compare(
-    password,
-    isUserExist.password
+    password as string,
+    isUserExist.password as string
   );
   if (!isPasswordMatched) {
     throw new AppError(httpStatus.UNAUTHORIZED, "Password is incorrect");
