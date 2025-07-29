@@ -1,0 +1,55 @@
+import { envVars } from "../../config/env";
+import AppError from "../../errorHelpers/appErrors";
+import { Role } from "../user/user.interface";
+import { User } from "../user/user.model";
+import { LoginPayload, RegisterPayload } from "./auth.interface";
+import bcryptjs from "bcrypt";
+import httpStatus from "http-status-codes"
+import { createTokens } from "../user/user.token";
+
+const createUser = async(payload: RegisterPayload) =>{
+    let {email, password, name, role= Role.RIDER} = payload;
+    const isExist = await User.findOne({email});
+    if(isExist){
+        throw new AppError(401, "User already exists with the email");
+    }
+ const hashPassword = await bcryptjs.hash(
+    password as string,
+    Number(envVars.PASSWORD_SALT)
+  );
+        const createUser = await User.create({
+          email,
+          password: hashPassword,
+          name,
+          role
+        });
+        return createUser;
+    
+}
+const credentialLogin = async(payload: LoginPayload)=>{
+  const { email, password } = payload;
+  // Step 1: Check if user exists
+  const isUserExist = await User.findOne({ email });
+  if (!isUserExist) {
+    throw new AppError(httpStatus.NOT_FOUND, "User does not exist");
+  }
+   // Step 2: Check password
+  const isPasswordMatched = await bcryptjs.compare(password, isUserExist.password);
+  if (!isPasswordMatched) {
+    throw new AppError(httpStatus.UNAUTHORIZED, "Password is incorrect");
+  }
+   const userToken = createTokens(isUserExist)
+   const {password:pass, ...rest} = isUserExist.toObject()
+    return{
+       accessToken: userToken.accessToken,
+       refreshToken: userToken.refreshToken,
+       user: rest
+    }
+}
+export const AuthService = {
+  createUser,
+  credentialLogin
+//   getUser,
+//   updateUser,
+//   getMe
+};
