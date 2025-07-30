@@ -1,8 +1,20 @@
-export type IDriver = {
-  _id?: string;
+// src/modules/driver/driver.interface.ts
+import {  Types } from "mongoose";
+import { Role } from "../user/user.interface";
+
+export interface IDriverVehicleInfo {
+  vehicleNumber: string;
+  vehicleType: string;
+  isApproved: boolean;
+  isAvailable: boolean;
+  totalEarnings: number;
+}
+
+export interface IDriver  {
+  _id: Types.ObjectId;
   name: string;
   email: string;
-  phone: string;
-  licenseNumber: string;
-  isActive?: boolean;
-};
+  password: string;
+  role: Role.DRIVER;
+  driverInfo: IDriverVehicleInfo;
+}

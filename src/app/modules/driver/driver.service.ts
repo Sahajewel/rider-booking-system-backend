@@ -1,26 +1,48 @@
 
 import { Driver } from "./driver.model";
 import { IDriver } from "./driver.interface";
-
- const createDriver =  async (payload: IDriver) => {
-    return await Driver.create(payload);
-  }
+import bcryptjs from "bcrypt"
+import { envVars } from "../../config/env";
+ const createDriver = async (payload: IDriver) => {
+  const hashedPassword = await bcryptjs.hash(payload.password, Number(envVars.PASSWORD_SALT));
+  const driverData = {
+    ...payload,
+    password: hashedPassword,
+    role: "driver",
+  };
+  return await Driver.create(driverData);
+};
   
 
- const  getAllDrivers = async () => {
-    return await Driver.find();
-  }
+ const getAllDrivers = async () => {
+  return await Driver.find();
+};
 
- const  getSingleDriver = async (id: string) => {
-    return await Driver.findById(id);
-  }
+ // নির্দিষ্ট একটি ড্রাইভার বের করার ফাংশন
+const getSingleDriver = async (id: string) => {
+  return await Driver.findById(id);
+};
 
-  const updateDriver = async (id: string, payload: Partial<IDriver>) => {
-    return await Driver.findByIdAndUpdate(id, payload, { new: true });
+// ড্রাইভার আপডেট করার ফাংশন
+const updateDriver = async (id: string, payload: Partial<IDriver>) => {
+  if (payload.password) {
+    payload.password = await bcryptjs.hash(payload.password, envVars.PASSWORD_SALT);
   }
+  return await Driver.findByIdAndUpdate(id, payload, { new: true });
+};
 
-  const deleteDriver = async (id: string) => {
-    return await Driver.findByIdAndDelete(id);
+ // ড্রাইভার ডিলিট করার ফাংশন
+const deleteDriver = async (id: string) => {
+  return await Driver.findByIdAndDelete(id);
+};
+// অ্যাভেইলেবল সেট করার ফাংশন (অতিরিক্ত)
+const   updateAvailability = async (email: string, payload: { isAvailable: boolean }) => {
+    const updated = await Driver.findOneAndUpdate(
+      { email },
+      { "driverInfo.isAvailable": payload.isAvailable },
+      { new: true }
+    );
+    return updated;
   }
 
  export const DriverService = {
@@ -28,5 +50,6 @@ import { IDriver } from "./driver.interface";
     getAllDrivers,
     getSingleDriver,
     updateDriver,
-    deleteDriver
+    deleteDriver,
+    updateAvailability
 }
