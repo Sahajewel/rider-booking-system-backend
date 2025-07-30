@@ -3,7 +3,6 @@ import AppError from "../../errorHelpers/appErrors";
 import { IUser, Role } from "./user.interface";
 import { User } from "./user.model";
 import statusCode from "http-status-codes";
-import de from "zod/v4/locales/de.cjs";
 const getUsers = async (user: IUser) => {
 
   if(user.role !== Role.ADMIN){
