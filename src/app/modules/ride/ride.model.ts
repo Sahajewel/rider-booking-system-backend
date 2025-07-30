@@ -1,0 +1,16 @@
+import { Schema, model } from "mongoose";
+import { IRide, RideStatus } from "./ride.interface";
+
+
+const rideSchema = new Schema<IRide>({
+  rider: { type: Schema.Types.ObjectId, ref: "User" },
+  driver: { type: Schema.Types.ObjectId, ref: "User" },
+  pickupLocation: { type: String, required: true },
+  dropoffLocation: { type: String, required: true },
+  status: { type: String, enum: Object.values(RideStatus), default: RideStatus.REQUESTED },
+  fare: { type: Number },
+  requestedAt: { type: Date, default: Date.now },
+  completedAt: { type: Date }
+});
+
+export const Ride = model<IRide>("Ride", rideSchema);
