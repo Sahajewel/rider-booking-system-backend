@@ -87,35 +87,4 @@ Timestamps:
 
 ---
 
-## 🗃 Folder Structure
 
-src/
-├── modules/
-│ ├── auth/
-│ ├── user/
-│ ├── rider/
-│ ├── driver/
-│ ├── ride/
-├── middlewares/
-├── utils/
-├── config/
-├── app.ts
-├── server.ts
-
-
-
-- Modular design for scalability
-- Each module has:
-  - `controller`, `service`, `model`, `validation`, `routes`
-
----
-
-## 📜 Setup Instructions
-
-1. Clone the repository
-   ```bash
-   git clone https://github.com/yourusername/ride-booking-api.git
-   cd ride-booking-api
-npm install
-
-npm run dev
