@@ -11,6 +11,16 @@ const userSchema = new Schema<IUser>({
     default: Role.RIDER,
     required: true,
   },
+   isBlocked: {
+    type: Boolean,
+    default: false,
+  },
+  driverStatus: {
+  type: String,
+  enum: ["pending", "approved", "suspended"],
+  default: "pending",
+},
+
 }, {
   timestamps: true,
   versionKey: false

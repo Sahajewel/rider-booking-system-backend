@@ -66,11 +66,75 @@ const deleteUser = async (id: string, user: any) => {
   }
   return await User.findByIdAndDelete(id);
 };
+const blockUser = async (userId: string, admin: IUser) => {
+  if (admin.role !== Role.ADMIN) {
+    throw new AppError(403, "Forbidden access");
+  }
+
+  const user = await User.findByIdAndUpdate(userId, { isBlocked: true }, { new: true });
+  if (!user) {
+    throw new AppError(404, "User not found");
+  }
+
+  return user;
+};
+
+const unblockUser = async (userId: string, admin: IUser) => {
+  if (admin.role !== Role.ADMIN) {
+    throw new AppError(403, "Forbidden access");
+  }
+
+  const user = await User.findByIdAndUpdate(userId, { isBlocked: false }, { new: true });
+  if (!user) {
+    throw new AppError(404, "User not found");
+  }
+
+  return user;
+};
+const approveDriver = async (id: string, admin: IUser) => {
+  if (admin.role !== Role.ADMIN) {
+    throw new AppError(403, "Forbidden access");
+  }
+
+  const driver = await User.findByIdAndUpdate(
+    id,
+    { driverStatus: "approved" },
+    { new: true }
+  );
+
+  if (!driver) {
+    throw new AppError(404, "Driver not found");
+  }
+
+  return driver;
+};
+
+const suspendDriver = async (id: string, admin: IUser) => {
+  if (admin.role !== Role.ADMIN) {
+    throw new AppError(403, "Forbidden access");
+  }
+
+  const driver = await User.findByIdAndUpdate(
+    id,
+    { driverStatus: "suspended" },
+    { new: true }
+  );
+
+  if (!driver) {
+    throw new AppError(404, "Driver not found");
+  }
+
+  return driver;
+};
 
 export const UserService = {
     getUsers,
     getMe,
     getSingleUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    blockUser,
+    unblockUser,
+    suspendDriver,
+    approveDriver
 }

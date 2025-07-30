@@ -11,5 +11,8 @@ export interface IUser {
     email: string;
   password: string;
   name: string;
+   isBlocked?: boolean;
   role: Role;
+  driverStatus?: "pending" | "approved" | "suspended";
+
 }

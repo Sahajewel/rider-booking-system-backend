@@ -3,12 +3,12 @@ import { Types } from "mongoose";
 export enum RideStatus {
   REQUESTED = "requested",
   ACCEPTED = "accepted",
+  REJECTED = "rejected",
   ONGOING = "ongoing",
   COMPLETED = "completed",
   CANCELLED = "cancelled",
-  PENDING = "pending"
+    PENDING = "pending", 
 }
-
 
 export interface IRide {
   _id?: Types.ObjectId;
@@ -18,6 +18,9 @@ export interface IRide {
   dropoffLocation: string;
   status: RideStatus;
   fare?: number;
+
   requestedAt: Date;
+  pickUpAt?: Date;         
+  inTransitAt?: Date;      
   completedAt?: Date;
 }

@@ -14,5 +14,7 @@ router.get("/:id",checkAuth(Role.ADMIN), DriverController.getSingleDriver);
 router.put("/:id",checkAuth(Role.ADMIN), validSchemaRequest(updateDriverZodSchema), DriverController.updateDriver);
 router.delete("/:id",checkAuth(Role.ADMIN), DriverController.deleteDriver);
 router.patch("/availability",checkAuth(Role.DRIVER), DriverController.updateAvailability);
+router.get("/earnings", checkAuth(Role.DRIVER), DriverController.getEarningsHistory);
+
 
 export const DriverRoutes = router;

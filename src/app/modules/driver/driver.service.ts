@@ -31,11 +31,10 @@ const updateDriver = async (id: string, payload: Partial<IDriver>) => {
   return await Driver.findByIdAndUpdate(id, payload, { new: true });
 };
 
- // ড্রাইভার ডিলিট করার ফাংশন
 const deleteDriver = async (id: string) => {
   return await Driver.findByIdAndDelete(id);
 };
-// অ্যাভেইলেবল সেট করার ফাংশন (অতিরিক্ত)
+
 const   updateAvailability = async (email: string, payload: { isAvailable: boolean }) => {
     const updated = await Driver.findOneAndUpdate(
       { email },
@@ -44,6 +43,21 @@ const   updateAvailability = async (email: string, payload: { isAvailable: boole
     );
     return updated;
   }
+  const getEarningsHistory = async (email: string) => {
+  const driver = await Driver.findOne({ email });
+
+  if (!driver) {
+    throw new Error("Driver not found");
+  }
+
+  return {
+    totalEarnings: driver.driverInfo.totalEarnings,
+    driverId: driver._id,
+    name: driver.name,
+    vehicleType: driver.driverInfo.vehicleType,
+  };
+};
+
 
  export const DriverService = {
     createDriver,
@@ -51,5 +65,6 @@ const   updateAvailability = async (email: string, payload: { isAvailable: boole
     getSingleDriver,
     updateDriver,
     deleteDriver,
-    updateAvailability
+    updateAvailability,
+    getEarningsHistory
 }

@@ -31,6 +31,10 @@ const updateRider = async (id: string, payload: Partial<IRider>) => {
 const deleteRider = async (id: string) => {
   return await Rider.findByIdAndDelete(id);
 };
+const getMyRides = async (riderId: string) => {
+  const rides = await Ride.find({ rider: riderId });
+  return rides;
+};
 
 export const RiderService = {
   createRider,
@@ -38,4 +42,5 @@ export const RiderService = {
   getSingleRider,
   updateRider,
   deleteRider,
+  getMyRides
 };

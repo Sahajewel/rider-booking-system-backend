@@ -30,7 +30,28 @@ router.delete(
   UserController.deleteUser
 );
 
+router.patch(
+  "/block/:id",
+  checkAuth(Role.ADMIN),
+  UserController.blockUser
+);
 
+router.patch(
+  "/unblock/:id",
+  checkAuth(Role.ADMIN),
+  UserController.unblockUser
+);
+router.patch(
+  "/approve-driver/:id",
+  checkAuth(Role.ADMIN),
+  UserController.approveDriver
+);
+
+router.patch(
+  "/suspend-driver/:id",
+  checkAuth(Role.ADMIN),
+  UserController.suspendDriver
+);
 
 
 export const userRoutes = router;

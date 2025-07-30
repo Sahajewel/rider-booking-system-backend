@@ -65,6 +65,18 @@ const deleteDriver = catchAsync(async (req: Request, res: Response) => {
       data: updatedDriver,
     });
   })
+const getEarningsHistory = catchAsync(async (req: Request, res: Response) => {
+  const { email } = req.user; // Comes from checkAuth
+
+  const earnings = await DriverService.getEarningsHistory(email);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Earnings history fetched successfully",
+    data: earnings,
+  });
+});
 
 export const DriverController = {
   createDriver,
@@ -73,4 +85,5 @@ export const DriverController = {
   updateDriver,
   deleteDriver,
   updateAvailability,
+  getEarningsHistory
 };

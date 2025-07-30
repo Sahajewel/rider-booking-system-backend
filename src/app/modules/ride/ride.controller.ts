@@ -57,10 +57,53 @@ const getSingleRide = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
+const acceptRide = catchAsync(async (req: Request, res: Response) => {
+  const rideId = req.params.id;
+  const driverId = req.user?._id;
+
+  const result = await RiderService.acceptRide(rideId, driverId);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Ride accepted successfully",
+    data: result,
+  });
+});
+
+const rejectRide = catchAsync(async (req: Request, res: Response) => {
+  const rideId = req.params.id;
+  const driverId = req.user?._id;
+
+  const result = await RiderService.rejectRide(rideId, driverId);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Ride rejected successfully",
+    data: result,
+  });
+});
+const updateRideStatusController = catchAsync(async (req: Request, res: Response) => {
+  const rideId = req.params.id;
+  const { status } = req.body;  // ফ্রন্টএন্ড থেকে নতুন স্ট্যাটাস নিবে
+
+  const updatedRide = await RiderService.updateRideStatus(rideId, status);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Ride status updated successfully",
+    data: updatedRide,
+  });
+});
 
 export const RiderController = {
   requestRide,
   getMyRides,
   cancelRide,
   getSingleRide,
+  acceptRide,
+  rejectRide,
+  updateRideStatusController
 };

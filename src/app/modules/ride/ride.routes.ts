@@ -3,7 +3,7 @@ import { Role } from "../user/user.interface";
 import { checkAuth } from "../../middleware/checkAuth";
 import { RiderController } from "./ride.controller";
 import { validSchemaRequest } from "../../middleware/validateRequest";
-import { requestRideZodSchema } from "./ride.validation";
+import { requestRideZodSchema, updateRideStatusZodSchema } from "./ride.validation";
 
 const router = express.Router();
 
@@ -31,5 +31,21 @@ router.patch(
   checkAuth(Role.RIDER),
   RiderController.cancelRide
 );
+router.patch(
+  "/accept/:id",
+  checkAuth(Role.DRIVER),
+  RiderController.acceptRide
+);
 
+router.patch(
+  "/reject/:id",
+  checkAuth(Role.DRIVER),
+  RiderController.rejectRide
+);
+router.patch(
+  "/:id/status",
+  checkAuth(Role.DRIVER),
+  validSchemaRequest(updateRideStatusZodSchema), // যদি ভ্যালিডেশন থাকে
+  RiderController.updateRideStatusController
+);
 export const RideRoutes = router;

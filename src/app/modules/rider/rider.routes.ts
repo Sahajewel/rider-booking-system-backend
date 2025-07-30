@@ -7,7 +7,7 @@ import { Role } from "../user/user.interface";
 
 const router = express.Router();
 
-// শুধুমাত্র ADMIN ইউজার এই রাউটগুলো অ্যাকসেস করতে পারবে
+
 router.post(
   "/",
   checkAuth(Role.ADMIN),
@@ -23,6 +23,12 @@ router.put(
   validSchemaRequest(updateRiderZodSchema),
   RiderController.updateRider
 );
+router.get(
+  "/my-rides",
+  checkAuth(Role.RIDER),
+  RiderController.getMyRides
+);
+
 router.delete("/:id", checkAuth(Role.ADMIN), RiderController.deleteRider);
 
 export const RiderRoutes = router;

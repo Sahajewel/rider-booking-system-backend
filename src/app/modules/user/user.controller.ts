@@ -76,10 +76,69 @@ const verifiedToken = req.user
   });
 });
 
+const blockUser = catchAsync(async (req: Request, res: Response) => {
+  const userId = req.params.id;
+  const admin = req.user as IUser;
+
+  const result = await UserService.blockUser(userId, admin);
+
+  sendResponse(res, {
+    statusCode: statusCode.OK,
+    success: true,
+    message: "User blocked successfully",
+    data: result,
+  });
+});
+
+const unblockUser = catchAsync(async (req: Request, res: Response) => {
+  const userId = req.params.id;
+  const admin = req.user as IUser;
+
+  const result = await UserService.unblockUser(userId, admin);
+
+  sendResponse(res, {
+    statusCode: statusCode.OK,
+    success: true,
+    message: "User unblocked successfully",
+    data: result,
+  });
+});
+const approveDriver = catchAsync(async (req: Request, res: Response) => {
+  const driverId = req.params.id;
+  const admin = req.user as IUser;
+
+  const result = await UserService.approveDriver(driverId, admin);
+
+  sendResponse(res, {
+    statusCode: statusCode.OK,
+    success: true,
+    message: "Driver approved successfully",
+    data: result,
+  });
+});
+
+const suspendDriver = catchAsync(async (req: Request, res: Response) => {
+  const driverId = req.params.id;
+  const admin = req.user as IUser;
+
+  const result = await UserService.suspendDriver(driverId, admin);
+
+  sendResponse(res, {
+    statusCode: statusCode.OK,
+    success: true,
+    message: "Driver suspended successfully",
+    data: result,
+  });
+});
+
 export const UserController = {
     getUsers,
     getMe,
     getSingleUser,
     updateUser,
-    deleteUser
+    deleteUser,
+    blockUser,
+    unblockUser,
+    suspendDriver,
+    approveDriver
 }
