@@ -3,7 +3,15 @@ import { Driver } from "./driver.model";
 import { IDriver } from "./driver.interface";
 import bcryptjs from "bcrypt"
 import { envVars } from "../../config/env";
+import { IUser, Role } from "../user/user.interface";
+import AppError from "../../errorHelpers/appErrors";
+import { User } from "../user/user.model";
+
+
  const createDriver = async (payload: IDriver) => {
+  // if(payload.role !==Role.DRIVER){
+  //   throw new AppError(401, "You are not created driver because your role is not driver")
+  // }
   const hashedPassword = await bcryptjs.hash(payload.password, Number(envVars.PASSWORD_SALT));
   const driverData = {
     ...payload,
@@ -18,12 +26,12 @@ import { envVars } from "../../config/env";
   return await Driver.find();
 };
 
- // নির্দিষ্ট একটি ড্রাইভার বের করার ফাংশন
+
 const getSingleDriver = async (id: string) => {
   return await Driver.findById(id);
 };
 
-// ড্রাইভার আপডেট করার ফাংশন
+
 const updateDriver = async (id: string, payload: Partial<IDriver>) => {
   if (payload.password) {
     payload.password = await bcryptjs.hash(payload.password, envVars.PASSWORD_SALT);
@@ -44,6 +52,9 @@ const   updateAvailability = async (email: string, payload: { isAvailable: boole
     return updated;
   }
   const getEarningsHistory = async (email: string) => {
+    // if(email === User.email ){
+      
+    // }
   const driver = await Driver.findOne({ email });
 
   if (!driver) {

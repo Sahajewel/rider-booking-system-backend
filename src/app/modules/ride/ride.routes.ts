@@ -45,7 +45,7 @@ router.patch(
 router.patch(
   "/:id/status",
   checkAuth(Role.DRIVER),
-  validSchemaRequest(updateRideStatusZodSchema), // যদি ভ্যালিডেশন থাকে
+  validSchemaRequest(updateRideStatusZodSchema), 
   RiderController.updateRideStatusController
 );
 export const RideRoutes = router;

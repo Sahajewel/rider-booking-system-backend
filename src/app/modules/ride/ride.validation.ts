@@ -3,6 +3,7 @@ import { RideStatus } from "./ride.interface";
 export const requestRideZodSchema = z.object({
   pickupLocation: z.string().nonempty("pickupLocation required"),
   dropoffLocation: z.string().nonempty("destination required"),
+  //  rider: z.string().nonempty("rider is required"),
 });
 
 

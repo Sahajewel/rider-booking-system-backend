@@ -56,25 +56,6 @@ const verifiedToken = req.user
 
 });
 
-const deleteUser = catchAsync(async (req: Request, res: Response) => {
-   const userId = req.params.id;
-//   const token = req.headers.authorization;
-//   const verifiedToken = verifyToken(token as string, envVars.JWT_ACCESS_TOKEN);
-
-const verifiedToken = req.user
-  const result = await UserService.deleteUser(userId, verifiedToken as JwtPayload) 
-
-  // If you want to allow only self-deletion or admin:
- 
-
-
-  sendResponse(res, {
-    statusCode: statusCode.OK,
-    success: true,
-    message: 'User deleted successfully',
-    data: result
-  });
-});
 
 const blockUser = catchAsync(async (req: Request, res: Response) => {
   const userId = req.params.id;
@@ -131,6 +112,22 @@ const suspendDriver = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const deleteUser = catchAsync(async (req: Request, res: Response) => {
+   const userId = req.params.id;
+//   const token = req.headers.authorization;
+//   const verifiedToken = verifyToken(token as string, envVars.JWT_ACCESS_TOKEN);
+
+const verifiedToken = req.user
+  const result = await UserService.deleteUser(userId, verifiedToken as JwtPayload) 
+
+  // If you want to allow only self-deletion or admin:
+  sendResponse(res, {
+    statusCode: statusCode.OK,
+    success: true,
+    message: 'User deleted successfully',
+    data: result
+  });
+});
 export const UserController = {
     getUsers,
     getMe,

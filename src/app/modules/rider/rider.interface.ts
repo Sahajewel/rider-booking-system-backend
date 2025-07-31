@@ -7,7 +7,7 @@ export interface IRider {
   email: string;
   password: string;
   role: Role.RIDER;
-  isBlocked?: boolean;  // ইউজার ব্লক করা আছে কিনা চেক করার জন্য
+  isBlocked?: boolean;  
   createdAt?: Date;
   updatedAt?: Date;
 }

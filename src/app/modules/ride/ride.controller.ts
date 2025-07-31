@@ -86,7 +86,7 @@ const rejectRide = catchAsync(async (req: Request, res: Response) => {
 });
 const updateRideStatusController = catchAsync(async (req: Request, res: Response) => {
   const rideId = req.params.id;
-  const { status } = req.body;  // ফ্রন্টএন্ড থেকে নতুন স্ট্যাটাস নিবে
+  const { status } = req.body;  
 
   const updatedRide = await RiderService.updateRideStatus(rideId, status);
 

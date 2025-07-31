@@ -4,8 +4,8 @@ import { IUser, Role } from "../user/user.interface";
 import { User } from "../user/user.model";
 import bcryptjs from "bcrypt";
 import httpStatus from "http-status-codes";
-import { createTokens } from "../user/user.token";
 import { JwtPayload } from "jsonwebtoken";
+import { createUserTokens } from "../user/user.token";
 
 const createUser = async (payload: Partial<IUser>) => {
   let { email, password, name, role = Role.RIDER } = payload;
@@ -25,29 +25,39 @@ const createUser = async (payload: Partial<IUser>) => {
   });
   return createUser;
 };
+import { Driver } from "../driver/driver.model"; // Import Driver model
+
 const credentialLogin = async (payload: Partial<IUser>) => {
   const { email, password } = payload;
-  // Step 1: Check if user exists
-  const isUserExist = await User.findOne({ email });
-  if (!isUserExist) {
+
+  // Step 1: Check in Driver first, then in User
+  const user =
+    (await Driver.findOne({ email })) || (await User.findOne({ email }));
+
+  if (!user) {
     throw new AppError(httpStatus.NOT_FOUND, "User does not exist");
   }
-  // Step 2: Check password
+
+  // Step 2: Compare password
   const isPasswordMatched = await bcryptjs.compare(
     password as string,
-    isUserExist.password as string
+    user.password as string
   );
   if (!isPasswordMatched) {
     throw new AppError(httpStatus.UNAUTHORIZED, "Password is incorrect");
   }
-  const userToken = createTokens(isUserExist);
-  const { password: pass, ...rest } = isUserExist.toObject();
+
+  // Step 3: Create token
+  const userToken = createUserTokens(user);
+  const { password: pass, ...rest } = user.toObject();
+
   return {
     accessToken: userToken.accessToken,
     refreshToken: userToken.refreshToken,
     user: rest,
   };
 };
+
 const changePassword = async (
   oldPassword: string,
   newPassword: string,

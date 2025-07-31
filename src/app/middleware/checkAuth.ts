@@ -18,6 +18,7 @@ export const checkAuth = (...authRoles: string[])=>async(req:Request, res: Respo
         throw new AppError(httpStatus.BAD_REQUEST, "User does not exist")
     };
     
+    
     if (isUserExist.isBlocked) {
         throw new AppError(httpStatus.FORBIDDEN, "You are blocked. Contact admin.");
       }

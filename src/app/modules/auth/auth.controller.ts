@@ -52,7 +52,7 @@ const changePassword = catchAsync(async (req: Request, res: Response) => {
     message: "user successfully password change",
     data: null,
   });
-});
+})
 
 const logout = catchAsync(async (req: Request, res: Response) => {
   res.clearCookie("accessToken", {

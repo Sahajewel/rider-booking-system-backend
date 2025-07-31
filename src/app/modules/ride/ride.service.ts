@@ -5,6 +5,7 @@ import { RideStatus } from "./ride.interface";
 import { Types } from "mongoose";
 
 const requestRide = async (riderId: string, rideData: any) => {
+  
   if (!rideData.pickupLocation || !rideData.dropoffLocation) {
     throw new AppError(httpStatus.BAD_REQUEST, "Pickup and dropoff required");
   }
@@ -13,7 +14,7 @@ const requestRide = async (riderId: string, rideData: any) => {
     rider: riderId,
     pickupLocation: rideData.pickupLocation,
     dropoffLocation: rideData.dropoffLocation,
-    status: RideStatus.REQUESTED,  // এখানে PENDING এর পরিবর্তে REQUESTED
+    status: RideStatus.REQUESTED,  
   });
 
   return newRide;

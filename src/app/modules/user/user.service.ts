@@ -3,6 +3,8 @@ import AppError from "../../errorHelpers/appErrors";
 import { IUser, Role } from "./user.interface";
 import { User } from "./user.model";
 import statusCode from "http-status-codes";
+
+
 const getUsers = async (user: IUser) => {
 
   if(user.role !== Role.ADMIN){
@@ -60,12 +62,6 @@ const updateUser = async (
   return newUpdateUser;
 };
 
-const deleteUser = async (id: string, user: any) => {
-      if(user.role !== Role.ADMIN){
-    throw new AppError(401, "Unauthorized access")
-  }
-  return await User.findByIdAndDelete(id);
-};
 const blockUser = async (userId: string, admin: IUser) => {
   if (admin.role !== Role.ADMIN) {
     throw new AppError(403, "Forbidden access");
@@ -127,6 +123,12 @@ const suspendDriver = async (id: string, admin: IUser) => {
   return driver;
 };
 
+const deleteUser = async (id: string, user: any) => {
+      if(user.role !== Role.ADMIN){
+    throw new AppError(401, "Unauthorized access")
+  }
+  return await User.findByIdAndDelete(id);
+};
 export const UserService = {
     getUsers,
     getMe,

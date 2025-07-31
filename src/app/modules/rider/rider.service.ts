@@ -32,7 +32,7 @@ const deleteRider = async (id: string) => {
   return await Rider.findByIdAndDelete(id);
 };
 const getMyRides = async (riderId: string) => {
-  const rides = await Ride.find({ rider: riderId });
+  const rides = await Rider.find({ rider: riderId });
   return rides;
 };
 
