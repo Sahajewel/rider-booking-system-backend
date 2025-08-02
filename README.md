@@ -79,7 +79,7 @@ Timestamps:
 
 | Method | Endpoint        | Description               |
 |--------|-----------------|---------------------------|
-| GET    | `/users/profile`| View own profile (Protected) |
+| GET    | `/user/me`| View own profile (Protected) |
 
 ---
 
@@ -87,8 +87,8 @@ Timestamps:
 
 | Method | Endpoint            | Description                     |
 |--------|---------------------|---------------------------------|
-| POST   | `/rider/request`    | Request a new ride              |
-| GET    | `/rider/my-rides`   | View ride history               |
+| POST   | `/ride/request`    | Request a new ride              |
+| GET    | `/ride/my-rides`   | View ride history               |
 
 ---
 
@@ -96,10 +96,10 @@ Timestamps:
 
 | Method | Endpoint                    | Description                                |
 |--------|-----------------------------|--------------------------------------------|
-| GET    | `/driver/available-rides`   | View available ride requests               |
-| PATCH  | `/driver/accept/:rideId`    | Accept a ride                              |
-| PATCH  | `/driver/status/:rideId`    | Update ride status (Picked/In Transit/etc) |
-| GET    | `/driver/my-rides`          | View own ride history                      |
+| GET    | `/driver/availability`   | View available ride requests               |
+| PATCH  | `/ride/accept/:rideId`    | Accept a ride                              |
+| PATCH  | `/ride/status/:rideId`    | Update ride status (Picked/In Transit/etc) |
+| GET    | `/ride/my-rides`          | View own ride history                      |
 
 ---
 
@@ -107,18 +107,13 @@ Timestamps:
 
 | Method | Endpoint                     | Description                          |
 |--------|------------------------------|--------------------------------------|
-| GET    | `/admin/drivers`             | View all registered drivers          |
-| PATCH  | `/admin/approve/:driverId`   | Approve a driver                     |
-| PATCH  | `/admin/block/:userId`       | Block a user                         |
-| PATCH  | `/admin/unblock/:userId`     | Unblock a user                       |
+| GET    | `/driver`             | View all registered drivers          |
+| PATCH  | `/user/approve-driver/:driverId`   | Approve a driver                     |
+| PATCH  | `/user/block/:userId`       | Block a user                         |
+| PATCH  | `/user/unblock/:userId`     | Unblock a user                       |
 
 ---
 
-## 🔐 Protected Routes
-
-All routes (except registration and login) are protected using JWT tokens. Role-based guards ensure only specific roles can access their own routes.
-
----
 
 ## ⚙️ Environment Variables
 
