@@ -101,7 +101,7 @@ This system follows strict role-based access across all routes to ensure that ac
 | **`GET /rider/:id`**                 |     ❌    |     ❌     |     ✅     | View rider                    |
 | **`PUT /rider/:id`**                 |     ❌    |     ❌     |     ✅     | Update rider                  |
 | **`DELETE /rider/:id`**              |     ❌    |     ❌     |     ✅     | Delete rider                  |
-| **`GET /rider/my-rides`**            |     ✅    |     ❌     |     ❌     | Rider’s ride list             |
+
 
 ---
 
