@@ -6,6 +6,7 @@ import { UserService } from "./user.service";
 import { IUser, Role } from "./user.interface";
 import { JwtPayload } from "jsonwebtoken";
 import AppError from "../../errorHelpers/appErrors";
+import { IDriver } from "../driver/driver.interface";
 
 
 const getUsers = catchAsync(async(req:Request, res: Response)=>{
@@ -85,7 +86,7 @@ const unblockUser = catchAsync(async (req: Request, res: Response) => {
   });
 });
 const approveDriver = catchAsync(async (req: Request, res: Response) => {
-  const driverId = req.params.id;
+  const driverId  = req.params.id ;
   const admin = req.user as IUser;
 
   const result = await UserService.approveDriver(driverId, admin);

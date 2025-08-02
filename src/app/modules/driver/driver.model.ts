@@ -1,25 +1,42 @@
-// src/modules/driver/driver.model.ts
-import mongoose, { Schema } from "mongoose";
+import { Schema, model } from "mongoose";
 import { IDriver } from "./driver.interface";
 import { Role } from "../user/user.interface";
 
-const DriverSchema = new Schema<IDriver>({
-  name: { type: String, required: true },
-  email: { type: String, required: true, unique: true },
-  password: { type: String, required: true },
- role: {
-  type: String,
-  enum: Object.values(Role), // ["ADMIN", "RIDER", "DRIVER"]
-  default: Role.DRIVER,
-  uppercase: true, // এটা দিলে ছোট হাতের দিলেও uppercase বানায় নিবে
-},
-  driverInfo: {
+const driverVehicleInfoSchema = new Schema(
+  {
     vehicleNumber: { type: String, required: true },
     vehicleType: { type: String, required: true },
+    licenseNumber: { type: String, required: true, unique: true },
     isApproved: { type: Boolean, default: false },
-    isAvailable: { type: Boolean, default: false },
-    totalEarnings: { type: Number, default: 0 },
+    isAvailable: { type: Boolean, default: true },
   },
-}, { timestamps: true });
+  { _id: false } // prevent separate _id for nested object
+);
 
-export const Driver = mongoose.model<IDriver>("Driver", DriverSchema);
+const driverSchema = new Schema<IDriver>(
+  {
+    name: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    role: {
+      type: String,
+      enum: [Role.DRIVER],
+      default: Role.DRIVER,
+      required: true,
+    },
+    isVerified: { type: Boolean, default: false },
+    driverInfo: {
+      type: driverVehicleInfoSchema,
+      required: true,
+    },
+    totalEarnings: {
+      type: Number,
+      default: 0,
+    },
+  },
+  {
+    timestamps: true,
+  }
+);
+
+export const Driver = model<IDriver>("Driver", driverSchema);

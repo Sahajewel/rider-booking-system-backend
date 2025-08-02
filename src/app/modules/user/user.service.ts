@@ -3,6 +3,8 @@ import AppError from "../../errorHelpers/appErrors";
 import { IUser, Role } from "./user.interface";
 import { User } from "./user.model";
 import statusCode from "http-status-codes";
+import { IDriver } from "../driver/driver.interface";
+import { Driver } from "../driver/driver.model";
 
 
 const getUsers = async (user: IUser) => {
@@ -91,36 +93,37 @@ const approveDriver = async (id: string, admin: IUser) => {
   if (admin.role !== Role.ADMIN) {
     throw new AppError(403, "Forbidden access");
   }
+ const user = await User.findById(id);
+ if(!user){
+   throw new AppError(404, "User not found");
+ }
+ if(user.role !== Role.DRIVER){
+  throw new AppError(400, "Only drivers can be approved");
+ }
+user.driverStatus = "approved";
+ 
+await user.save();
 
-  const driver = await User.findByIdAndUpdate(
-    id,
-    { driverStatus: "approved" },
-    { new: true }
-  );
-
-  if (!driver) {
-    throw new AppError(404, "Driver not found");
-  }
-
-  return driver;
+  return user;
 };
 
 const suspendDriver = async (id: string, admin: IUser) => {
   if (admin.role !== Role.ADMIN) {
     throw new AppError(403, "Forbidden access");
   }
-
-  const driver = await User.findByIdAndUpdate(
-    id,
-    { driverStatus: "suspended" },
-    { new: true }
-  );
-
-  if (!driver) {
+const user = await User.findById(id);
+  if (!user) {
     throw new AppError(404, "Driver not found");
-  }
+  };
+  if(user.role !=Role.DRIVER){
+    throw new AppError(400, "Only drivers can be suspended");
+  };
+  user.driverStatus = "suspended"
+  await user.save()
 
-  return driver;
+
+
+  return user;
 };
 
 const deleteUser = async (id: string, user: any) => {

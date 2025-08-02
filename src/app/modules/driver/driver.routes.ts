@@ -10,10 +10,10 @@ const router = express.Router();
 // admin er jonno
 router.post("/",checkAuth(Role.ADMIN), validSchemaRequest(createDriverZodSchema), DriverController.createDriver);
 router.get("/",checkAuth(Role.ADMIN), DriverController.getAllDrivers);
+router.patch("/availability",checkAuth(Role.DRIVER), DriverController.updateAvailability);
+router.get("/earnings",checkAuth(Role.DRIVER),  DriverController.getEarningsHistory);
 router.get("/:id",checkAuth(Role.ADMIN), DriverController.getSingleDriver);
 router.put("/:id",checkAuth(Role.ADMIN), validSchemaRequest(updateDriverZodSchema), DriverController.updateDriver);
-router.patch("/availability",checkAuth(Role.DRIVER), DriverController.updateAvailability);
-router.get("/earnings", checkAuth(Role.DRIVER), DriverController.getEarningsHistory);
 router.delete("/:id",checkAuth(Role.ADMIN), DriverController.deleteDriver);
 
 

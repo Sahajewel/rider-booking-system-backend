@@ -3,6 +3,7 @@ import httpStatus from "http-status-codes";
 import { DriverService } from "./driver.service";
 import { catchAsync } from "../../utils/catchAsync";
 import { sendResponse } from "../../utils/sendResponse";
+import { JwtPayload } from "jsonwebtoken";
 
 const createDriver = catchAsync(async (req: Request, res: Response) => {
   const result = await DriverService.createDriver(req.body);
@@ -55,7 +56,7 @@ const deleteDriver = catchAsync(async (req: Request, res: Response) => {
 });
 
  const updateAvailability = catchAsync(async (req: Request, res: Response) => {
-    const { email } = req.user; // if you are using auth, this should come from token
+    const { email } = req.user as JwtPayload; // if you are using auth, this should come from token
     const updatedDriver = await DriverService.updateAvailability(email, req.body);
 
     sendResponse(res, {
@@ -66,15 +67,18 @@ const deleteDriver = catchAsync(async (req: Request, res: Response) => {
     });
   })
 const getEarningsHistory = catchAsync(async (req: Request, res: Response) => {
-  const { email } = req.user; // Comes from checkAuth
+  // const { email } = req.user as JwtPayload; // Comes from checkAuth
+  const result = await DriverService.getEarningsHistory();
+    // const result = await RiderService.getMyRides(riderId);
 
-  const earnings = await DriverService.getEarningsHistory(email);
+  // const earnings = await DriverService.getEarningsHistory(email);
+
 
   sendResponse(res, {
     statusCode: httpStatus.OK,
     success: true,
     message: "Earnings history fetched successfully",
-    data: earnings,
+    data: result,
   });
 });
 

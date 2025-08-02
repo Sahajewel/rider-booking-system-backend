@@ -7,7 +7,8 @@ export interface IDriverVehicleInfo {
   vehicleType: string;
   isApproved: boolean;
   isAvailable: boolean;
-  totalEarnings: number;
+   licenseNumber: string;
+
 }
 
 export interface IDriver  {
@@ -16,5 +17,7 @@ export interface IDriver  {
   email: string;
   password: string;
   role: Role.DRIVER;
+  isVerified?: boolean;
   driverInfo: IDriverVehicleInfo;
+    totalEarnings: number;
 }

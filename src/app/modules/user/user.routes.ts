@@ -21,7 +21,7 @@ router.get("/:id", checkAuth(Role.ADMIN), UserController.getSingleUser);
 router.put(
   "/:id",
   validSchemaRequest(updateUserZodSchema),
-  checkAuth(Role.ADMIN),
+checkAuth(...Object.values(Role)),
   UserController.updateUser
 );
 router.delete(
