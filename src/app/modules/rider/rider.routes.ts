@@ -16,11 +16,7 @@ router.post(
 );
 
 router.get("/", checkAuth(Role.ADMIN), RiderController.getAllRiders);
-router.get(
-  "/my-rides",
-  checkAuth(Role.RIDER),
-  RiderController.getMyRides
-);
+
 router.get("/:id", checkAuth(Role.ADMIN), RiderController.getSingleRider);
 router.put(
   "/:id",

@@ -53,17 +53,7 @@ const deleteRider = catchAsync(async (req: Request, res: Response) => {
     data: result,
   });
 });
-const getMyRides = catchAsync(async (req: Request, res: Response) => {
-  const riderId = req.user?._id;
-  const result = await RiderService.getMyRides(riderId);
 
-  sendResponse(res, {
-    statusCode: httpStatus.OK,
-    success: true,
-    message: "Rides retrieved successfully!",
-    data: result,
-  });
-});
 
 
 export const RiderController = {
@@ -72,5 +62,5 @@ export const RiderController = {
   getSingleRider,
   updateRider,
   deleteRider,
-  getMyRides
+
 };
