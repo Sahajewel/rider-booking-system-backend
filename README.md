@@ -1,6 +1,6 @@
 # 🚖 Ride Booking API
 
-A role-based backend API system for booking rides — inspired by platforms like **Uber** and **Pathao** — built using **Node.js, Express.js, MongoDB, and Mongoose**.
+A role-based backend API system for booking rides — inspired by platforms like **Uber** and **Pathao** — built using **Typescript, Node.js, Express.js, MongoDB, and Mongoose**.
 
 This system handles **rider requests**, **driver assignments**, and **admin-level operations** with full authentication, authorization, ride status management, and proper validation.
 
@@ -62,14 +62,54 @@ Timestamps:
 - `requestedAt`, `acceptedAt`, `pickUpAt`, `inTransitAt`, `completedAt`, `cancelledAt`
 
 ---
+### 📘 Role-Based Access Control (RBAC)
+This system follows strict role-based access across all routes to ensure that actions are performed by authorized users only.
 
-## 🔐 Role-Based Routes
 
-| Role | Endpoints |
-|------|-----------|
-| Rider | `/rides/request`, `/rides/my`, `/rides/:id`, `/rides/cancel/:id` |
-| Driver | `/rides/pending`, `/rides/accept/:id`, `/rides/update-status/:id` |
-| Admin | `/admin/drivers`, `/admin/approve-driver/:id`, `/admin/block-user/:id` |
+
+| Endpoint                             | Rider 👤 | Driver 🚗 | Admin 🛡️ | Description                   |
+| ------------------------------------ | :------: | :-------: | :-------: | ----------------------------- |
+| **`POST /auth/register`**            |     ✅    |     ✅     |     ✅     | Register as user              |
+| **`POST /auth/login`**               |     ✅    |     ✅     |     ✅     | Login with credentials        |
+| **`POST /auth/logout`**              |     ✅    |     ✅     |     ✅     | Logout from session           |
+| **`POST /auth/change-password`**     |     ✅    |     ✅     |     ✅     | Change current password       |
+| **`GET /user/me`**                   |     ✅    |     ✅     |     ✅     | View own profile              |
+| **`PUT /user/:id`**                  |     ✅    |     ✅     |     ✅     | Update own profile            |
+| **`GET /user/`**                     |     ❌    |     ❌     |     ✅     | View all users                |
+| **`GET /user/:id`**                  |     ❌    |     ❌     |     ✅     | View single user              |
+| **`DELETE /user/:id`**               |     ❌    |     ❌     |     ✅     | Delete a user                 |
+| **`PATCH /user/block/:id`**          |     ❌    |     ❌     |     ✅     | Block user                    |
+| **`PATCH /user/unblock/:id`**        |     ❌    |     ❌     |     ✅     | Unblock user                  |
+| **`PATCH /user/approve-driver/:id`** |     ❌    |     ❌     |     ✅     | Approve driver                |
+| **`PATCH /user/suspend-driver/:id`** |     ❌    |     ❌     |     ✅     | Suspend driver                |
+| **`POST /ride/request`**             |     ✅    |     ❌     |     ❌     | Request a new ride            |
+| **`PATCH /ride/cancel/:id`**         |     ✅    |     ❌     |     ❌     | Cancel ride (if not accepted) |
+| **`GET /ride/my-rides`**             |     ✅    |     ❌     |     ❌     | Rider’s ride history          |
+| **`GET /ride/:id`**                  |     ✅    |     ❌     |     ❌     | View single ride              |
+| **`PATCH /ride/accept/:id`**         |     ❌    |     ✅     |     ❌     | Accept a ride                 |
+| **`PATCH /ride/reject/:id`**         |     ❌    |     ✅     |     ❌     | Reject a ride                 |
+| **`PATCH /ride/:id/status`**         |     ❌    |     ✅     |     ❌     | Update ride status            |
+| **`GET /driver/earnings`**           |     ❌    |     ✅     |     ❌     | View earnings summary         |
+| **`PATCH /driver/availability`**     |     ❌    |     ✅     |     ❌     | Toggle online/offline         |
+| **`POST /driver`**                   |     ❌    |     ❌     |     ✅     | Create driver (admin only)    |
+| **`GET /driver`**                    |     ❌    |     ❌     |     ✅     | View all drivers              |
+| **`GET /driver/:id`**                |     ❌    |     ❌     |     ✅     | View driver profile           |
+| **`PUT /driver/:id`**                |     ❌    |     ❌     |     ✅     | Update driver                 |
+| **`DELETE /driver/:id`**             |     ❌    |     ❌     |     ✅     | Delete driver                 |
+| **`POST /rider`**                    |     ❌    |     ❌     |     ✅     | Create rider                  |
+| **`GET /rider`**                     |     ❌    |     ❌     |     ✅     | View all riders               |
+| **`GET /rider/:id`**                 |     ❌    |     ❌     |     ✅     | View rider                    |
+| **`PUT /rider/:id`**                 |     ❌    |     ❌     |     ✅     | Update rider                  |
+| **`DELETE /rider/:id`**              |     ❌    |     ❌     |     ✅     | Delete rider                  |
+| **`GET /rider/my-rides`**            |     ✅    |     ❌     |     ❌     | Rider’s ride list             |
+
+---
+
+
+## ⚙️ Environment Variables
+
+Make sure to configure `.env`:
+
 
 ---
 
@@ -86,5 +126,6 @@ Timestamps:
   - `404` – Not Found  
 
 ---
+
 
 
