@@ -1,6 +1,6 @@
 # 🚖 Ride Booking API
 
-A role-based backend API system for booking rides — inspired by platforms like **Uber** and **Pathao** — built using **Node.js, Express.js, MongoDB, and Mongoose**.
+A role-based backend API system for booking rides — inspired by platforms like **Uber** and **Pathao** — built using **Typescript, Node.js, Express.js, MongoDB, and Mongoose**.
 
 This system handles **rider requests**, **driver assignments**, and **admin-level operations** with full authentication, authorization, ride status management, and proper validation.
 
