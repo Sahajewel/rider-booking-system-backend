@@ -63,13 +63,67 @@ Timestamps:
 
 ---
 
-## 🔐 Role-Based Routes
 
-| Role | Endpoints |
-|------|-----------|
-| Rider | `/rides/request`, `/rides/my`, `/rides/:id`, `/rides/cancel/:id` |
-| Driver | `/rides/pending`, `/rides/accept/:id`, `/rides/update-status/:id` |
-| Admin | `/admin/drivers`, `/admin/approve-driver/:id`, `/admin/block-user/:id` |
+---
+
+## 🔐 Authentication Routes
+
+| Method | Endpoint        | Description               |
+|--------|-----------------|---------------------------|
+| POST   | `/auth/register`| Register as Rider or Driver |
+| POST   | `/auth/login`   | Login and get access token |
+
+---
+
+## 👤 User Routes
+
+| Method | Endpoint        | Description               |
+|--------|-----------------|---------------------------|
+| GET    | `/users/profile`| View own profile (Protected) |
+
+---
+
+## 🚴 Rider Routes
+
+| Method | Endpoint            | Description                     |
+|--------|---------------------|---------------------------------|
+| POST   | `/rider/request`    | Request a new ride              |
+| GET    | `/rider/my-rides`   | View ride history               |
+
+---
+
+## 🚕 Driver Routes
+
+| Method | Endpoint                    | Description                                |
+|--------|-----------------------------|--------------------------------------------|
+| GET    | `/driver/available-rides`   | View available ride requests               |
+| PATCH  | `/driver/accept/:rideId`    | Accept a ride                              |
+| PATCH  | `/driver/status/:rideId`    | Update ride status (Picked/In Transit/etc) |
+| GET    | `/driver/my-rides`          | View own ride history                      |
+
+---
+
+## 🛠️ Admin Routes
+
+| Method | Endpoint                     | Description                          |
+|--------|------------------------------|--------------------------------------|
+| GET    | `/admin/drivers`             | View all registered drivers          |
+| PATCH  | `/admin/approve/:driverId`   | Approve a driver                     |
+| PATCH  | `/admin/block/:userId`       | Block a user                         |
+| PATCH  | `/admin/unblock/:userId`     | Unblock a user                       |
+
+---
+
+## 🔐 Protected Routes
+
+All routes (except registration and login) are protected using JWT tokens. Role-based guards ensure only specific roles can access their own routes.
+
+---
+
+## ⚙️ Environment Variables
+
+Make sure to configure `.env`:
+
 
 ---
 
