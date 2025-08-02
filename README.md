@@ -64,79 +64,6 @@ Timestamps:
 ---
 
 
----
-
-## 🔐 Authentication Routes
-
-| Method | Endpoint        | Description               |
-|--------|-----------------|---------------------------|
-| POST   | `/auth/register`| Register as Rider or Driver |
-| POST   | `/auth/login`   | Login and get access token |
-
----
-
-## 👤 User Routes
-
-| Method | Endpoint        | Description               |
-|--------|-----------------|---------------------------|
-| GET    | `/user/me`| View own profile (Protected) |
-
----
-
-## 🚴 Rider Routes
-
-| Method | Endpoint            | Description                     |
-|--------|---------------------|---------------------------------|
-| POST   | `/ride/request`    | Request a new ride              |
-| GET    | `/ride/my-rides`   | View ride history               |
-
----
-
-## 🚕 Driver Routes
-
-| Method | Endpoint                    | Description                                |
-|--------|-----------------------------|--------------------------------------------|
-| GET    | `/driver/availability`   | View available ride requests               |
-| PATCH  | `/ride/accept/:rideId`    | Accept a ride                              |
-| PATCH  | `/ride/status/:rideId`    | Update ride status (Picked/In Transit/etc) |
-| GET    | `/ride/my-rides`          | View own ride history                      |
-
----
-
-## 🛠️ Admin Routes
-
-| Method | Endpoint                     | Description                          |
-|--------|------------------------------|--------------------------------------|
-| GET    | `/driver`             | View all registered drivers          |
-| PATCH  | `/user/approve-driver/:driverId`   | Approve a driver                     |
-| PATCH  | `/user/block/:userId`       | Block a user                         |
-| PATCH  | `/user/unblock/:userId`     | Unblock a user                       |
-
----
-
-
-## ⚙️ Environment Variables
-
-Make sure to configure `.env`:
-
-
----
-
-## 🧪 Testing & Documentation
-
-- All routes tested with **Postman**
-- Includes headers for:
-  - `Authorization: Bearer <token>`
-- Response codes used:
-  - `200` – Success  
-  - `201` – Created  
-  - `400` – Bad Request  
-  - `403` – Forbidden  
-  - `404` – Not Found  
-
----
-
-
 | Endpoint                             | Rider 👤 | Driver 🚗 | Admin 🛡️ | Description                   |
 | ------------------------------------ | :------: | :-------: | :-------: | ----------------------------- |
 | **`POST /auth/register`**            |     ✅    |     ✅     |     ✅     | Register as user              |
@@ -172,4 +99,30 @@ Make sure to configure `.env`:
 | **`PUT /rider/:id`**                 |     ❌    |     ❌     |     ✅     | Update rider                  |
 | **`DELETE /rider/:id`**              |     ❌    |     ❌     |     ✅     | Delete rider                  |
 | **`GET /rider/my-rides`**            |     ✅    |     ❌     |     ❌     | Rider’s ride list             |
+
+---
+
+
+## ⚙️ Environment Variables
+
+Make sure to configure `.env`:
+
+
+---
+
+## 🧪 Testing & Documentation
+
+- All routes tested with **Postman**
+- Includes headers for:
+  - `Authorization: Bearer <token>`
+- Response codes used:
+  - `200` – Success  
+  - `201` – Created  
+  - `400` – Bad Request  
+  - `403` – Forbidden  
+  - `404` – Not Found  
+
+---
+
+
 
