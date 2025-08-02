@@ -137,3 +137,39 @@ Make sure to configure `.env`:
 ---
 
 
+| Endpoint                             | Rider 👤 | Driver 🚗 | Admin 🛡️ | Description                   |
+| ------------------------------------ | :------: | :-------: | :-------: | ----------------------------- |
+| **`POST /auth/register`**            |     ✅    |     ✅     |     ✅     | Register as user              |
+| **`POST /auth/login`**               |     ✅    |     ✅     |     ✅     | Login with credentials        |
+| **`POST /auth/logout`**              |     ✅    |     ✅     |     ✅     | Logout from session           |
+| **`POST /auth/change-password`**     |     ✅    |     ✅     |     ✅     | Change current password       |
+| **`GET /user/me`**                   |     ✅    |     ✅     |     ✅     | View own profile              |
+| **`PUT /user/:id`**                  |     ✅    |     ✅     |     ✅     | Update own profile            |
+| **`GET /user/`**                     |     ❌    |     ❌     |     ✅     | View all users                |
+| **`GET /user/:id`**                  |     ❌    |     ❌     |     ✅     | View single user              |
+| **`DELETE /user/:id`**               |     ❌    |     ❌     |     ✅     | Delete a user                 |
+| **`PATCH /user/block/:id`**          |     ❌    |     ❌     |     ✅     | Block user                    |
+| **`PATCH /user/unblock/:id`**        |     ❌    |     ❌     |     ✅     | Unblock user                  |
+| **`PATCH /user/approve-driver/:id`** |     ❌    |     ❌     |     ✅     | Approve driver                |
+| **`PATCH /user/suspend-driver/:id`** |     ❌    |     ❌     |     ✅     | Suspend driver                |
+| **`POST /ride/request`**             |     ✅    |     ❌     |     ❌     | Request a new ride            |
+| **`PATCH /ride/cancel/:id`**         |     ✅    |     ❌     |     ❌     | Cancel ride (if not accepted) |
+| **`GET /ride/my-rides`**             |     ✅    |     ❌     |     ❌     | Rider’s ride history          |
+| **`GET /ride/:id`**                  |     ✅    |     ❌     |     ❌     | View single ride              |
+| **`PATCH /ride/accept/:id`**         |     ❌    |     ✅     |     ❌     | Accept a ride                 |
+| **`PATCH /ride/reject/:id`**         |     ❌    |     ✅     |     ❌     | Reject a ride                 |
+| **`PATCH /ride/:id/status`**         |     ❌    |     ✅     |     ❌     | Update ride status            |
+| **`GET /driver/earnings`**           |     ❌    |     ✅     |     ❌     | View earnings summary         |
+| **`PATCH /driver/availability`**     |     ❌    |     ✅     |     ❌     | Toggle online/offline         |
+| **`POST /driver`**                   |     ❌    |     ❌     |     ✅     | Create driver (admin only)    |
+| **`GET /driver`**                    |     ❌    |     ❌     |     ✅     | View all drivers              |
+| **`GET /driver/:id`**                |     ❌    |     ❌     |     ✅     | View driver profile           |
+| **`PUT /driver/:id`**                |     ❌    |     ❌     |     ✅     | Update driver                 |
+| **`DELETE /driver/:id`**             |     ❌    |     ❌     |     ✅     | Delete driver                 |
+| **`POST /rider`**                    |     ❌    |     ❌     |     ✅     | Create rider                  |
+| **`GET /rider`**                     |     ❌    |     ❌     |     ✅     | View all riders               |
+| **`GET /rider/:id`**                 |     ❌    |     ❌     |     ✅     | View rider                    |
+| **`PUT /rider/:id`**                 |     ❌    |     ❌     |     ✅     | Update rider                  |
+| **`DELETE /rider/:id`**              |     ❌    |     ❌     |     ✅     | Delete rider                  |
+| **`GET /rider/my-rides`**            |     ✅    |     ❌     |     ❌     | Rider’s ride list             |
+
